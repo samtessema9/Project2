@@ -27,13 +27,13 @@ const Filter = ({text, name}) => {
             })
         })
         
-        console.log(resp.data.choices[0].message.content)
+        setResponse([...response, resp.data.choices[0].message.content])
 
     }
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         setRequest([...request, e.target.name])
-        makeRequest()
+        await makeRequest()
         setPrompt(!prompt)
     }
 

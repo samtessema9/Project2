@@ -7,7 +7,7 @@ const PrimaryContextProvider = (props) => {
 
     const [code, setCode] = useState([]);
 
-    const [response, setResponse] = useState([]);
+    const [response, setResponse] = useState([null]);
 
     const [request, setRequest] = useState(['']);
 

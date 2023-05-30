@@ -1,17 +1,20 @@
-import logo from './logo.svg';
+import React, {useContext} from 'react';
+import { primaryContext } from './context/primaryContext';
+
 import './App.css';
-import Prompt from './components/Prompt';
-import Response from './components/Response';
+// import TabsComp from './components/Tabs';
 import Search from './components/Search';
+import UncontrolledExample from './components/Tabs';
 
 const App = () => {
 
-  let prompt = true;
+  const {prompt, response} = useContext(primaryContext)
 
   return (
     <div className="App">
       <Search />
-      {prompt ? <Prompt /> : <Response />}
+      <UncontrolledExample />
+  
     </div>
   );
 }

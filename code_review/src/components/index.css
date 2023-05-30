@@ -16,6 +16,12 @@ button {
   background-color: pink;
   border: 2px solid blue;
   border-radius: 4px;
+
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: grey;
 }
 
 #first {
