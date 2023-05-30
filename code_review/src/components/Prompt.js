@@ -1,14 +1,20 @@
-import React from "react";
+import React, {useContext} from "react";
 import './index.css'
-// import {config} from "dotenv";
-// config({path: '../.env'})
+import { primaryContext } from "../context/primaryContext";
 
 const Prompt = ({id}) => {
+
+    const {code, setCode} = useContext(primaryContext)
+
+    const handleChange = (e) => {
+        setCode(e.target.value)
+        console.log(code)
+    }
+
     return ( 
         <div id={id}>
-            <p>This is prompt {id}</p>
             <h2>Enter code snippet below.</h2>
-            <textarea></textarea>
+            <textarea value={code} onChange={handleChange}></textarea>
         </div>
      );
 }
