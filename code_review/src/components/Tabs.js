@@ -3,6 +3,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Prompt from './Prompt';
 import Response from './Response';
+import Github from './Github';
 
 const TabsComponent = () => {
     const [activeTab, setActiveTab] = useState('prompt');
@@ -20,8 +21,8 @@ const TabsComponent = () => {
             <Tab eventKey="response" title="Response">
             {activeTab === 'response' && <Response />}
             </Tab>
-            <Tab eventKey="questions" title="Questions">
-            {activeTab === 'questions' && <p>content 3</p>}
+            <Tab eventKey="github" title="Github">
+            {activeTab === 'github' && <Github />}
             </Tab>
         </Tabs>
       </div>

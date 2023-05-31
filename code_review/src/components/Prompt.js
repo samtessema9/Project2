@@ -2,13 +2,12 @@ import React, {useContext} from "react";
 import './index.css'
 import { primaryContext } from "../context/primaryContext";
 
-const Prompt = ({id}) => {
+const Prompt = () => {
 
     const {code, setCode} = useContext(primaryContext)
 
     const handleChange = (e) => {
         setCode(e.target.value)
-        console.log(code)
     }
 
     return ( 
