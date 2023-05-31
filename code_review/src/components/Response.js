@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useContext} from "react";
+import { primaryContext } from "../context/primaryContext";
 import "./index.css"
 // import {config} from "dotenv";
 // config({path: '../.env'})
 
-const Response = ({id, value}) => {
+const Response = () => {
+    const { response} = useContext(primaryContext)
+
     return ( 
-        <div id={id}>
-            <p>This is the Response {id}</p>
-            <textarea value={value}></textarea>
+        <div id="response">
+            <h3>Response</h3>
+            <textarea value={response[response.length - 1]}></textarea>
         </div>
      );
 }

@@ -12,8 +12,8 @@ const Prompt = ({id}) => {
     }
 
     return ( 
-        <div id={id}>
-            <h2>Enter code snippet below.</h2>
+        <div id="prompt">
+            <h3>enter / edit Code</h3>
             <textarea value={code} onChange={handleChange}></textarea>
         </div>
      );

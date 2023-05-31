@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import { primaryContext } from './context/primaryContext';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 // import TabsComp from './components/Tabs';
 import Search from './components/Search';
-import UncontrolledExample from './components/Tabs';
+import Tabs from './components/Tabs';
 
 const App = () => {
 
@@ -12,8 +12,9 @@ const App = () => {
 
   return (
     <div className="App">
+
+      <Tabs />
       <Search />
-      <UncontrolledExample />
   
     </div>
   );

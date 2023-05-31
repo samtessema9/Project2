@@ -7,14 +7,14 @@ const PrimaryContextProvider = (props) => {
 
     const [code, setCode] = useState([]);
 
-    const [response, setResponse] = useState([null]);
+    const [response, setResponse] = useState(['']);
 
-    const [request, setRequest] = useState(['']);
+    const [convo, setConvo] = useState([{"role": "system", "content": "you are a code reviewer"}]);
 
     const obj = {
         code, setCode,
         response, setResponse, 
-        request, setRequest, 
+        convo, setConvo, 
         prompt, setPrompt
     }
 

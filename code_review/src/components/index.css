@@ -1,3 +1,12 @@
+* {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 600;
+}
+
+h3 {
+  font-weight: 700;
+}
+
 div {
   margin-left: auto !important;
   margin-right: auto !important;
@@ -12,9 +21,9 @@ div {
 
 button {
   height: 30px;
-  color: green;
-  background-color: pink;
-  border: 2px solid blue;
+  color: black;
+  background-color: lightblue;
+  border: 2px solid black;
   border-radius: 4px;
 
 }
@@ -48,22 +57,10 @@ textarea {
   border: 2px solid #ccc;
   border-radius: 4px;
   resize: none;
+  font-weight: 400;
 }
 
-#firstResponse {
-  width: 40%;
-  height: 60%;
-  border: 2px solid red;
-}
 
-#secondPrompt {
-  width: 40%;
-  height: 30%;
-  border: 2px solid green;
-}
-
-#secondResponse {
-    width: 40%;
-    height: 30%;
-    border: 2px solid red;
+.tab-content {
+  margin-top: 20px;
 }
