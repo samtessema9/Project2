@@ -14,6 +14,9 @@ const Github = () => {
 
     const fetchData = async () => {
         try {
+
+            console.log({convo})
+
         //   const resp = await axios({
         //     url: "https://api.openai.com/v1/chat/completions",
         //     method: "POST",
@@ -27,7 +30,7 @@ const Github = () => {
         //     }),
         //   });
 
-          console.log(convo)
+        //   console.log(convo)
 
         //   const data = resp.data.choices
 
@@ -47,12 +50,12 @@ const Github = () => {
         if (firstRender) {
             setFirstRender(false)
         } else {
-
+           
             fetchData();
         }
     }, [request])
 
-    const fetchFilesRecursively = async (username, repository, folderPath) => {
+    const fetchFilesRecursively = async (username, repository, folderPath, store) => {
         const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${folderPath}`;
         let code = ''
       
@@ -66,19 +69,16 @@ const Github = () => {
               const fileContentsResponse = await axios(item._links.self);
               const fileContents = atob(fileContentsResponse.data.content);
       
-              code += `File: ${item.path}\n\n`
-              code += `Contents: \n${fileContents}\n\n`
+              store.push(`File: ${item.path}\n\n`)
+              store.push(`Contents: \n${fileContents}\n\n`)
 
             } else if (item.type === 'dir') {
-                await fetchFilesRecursively(username, repository, item.path);
+                await fetchFilesRecursively(username, repository, item.path, store);
+             
             }
           }
 
-          console.log(code)
-
-          setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled file: *path* and content: *code*. review all of the code below and tell me if there are any issues or changes that should be made and which file the issues are in. if no changes then tell me what the code does well. \n\n ${code}`}])
-
-          setRequest(true)
+          
     
         } catch (error) {
           console.error('Error reading folder:', error);
@@ -101,14 +101,22 @@ const Github = () => {
         }
     }
 
-      const handleClick = () => {
+      const handleClick = async () => {
         const info = extractInfoFromUrl(link)
         if (!info) {
             console.log('invalid link')
             return 
         }
         const {username, repo, path} = info
-        fetchFilesRecursively(username, repo, path)
+        let codeArr = [];
+        await fetchFilesRecursively(username, repo, path, codeArr)
+
+        let strCode = codeArr.reduce((total, element) => total + element)
+
+        // setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled file: *path* and content: *code*. review all of the code below and tell me if there are any issues or changes that should be made and which file the issues are in. if no changes then tell me what the code does well. \n\n ${strCode}`}])
+
+        console.log("setting request, code is ", strCode)
+        // setRequest(true)
 
       }
 
