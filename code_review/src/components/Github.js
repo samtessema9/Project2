@@ -1,29 +1,75 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
+import { primaryContext } from '../context/primaryContext'
 import axios from 'axios';
 
 const Github = () => {
+    const [firstRender, setFirstRender] = useState(true)
 
     const [link, setLink] = useState('')
 
+    const {convo, setConvo, response, setResponse} = useContext(primaryContext)
+
+    const fetchData = async () => {
+        try {
+          const resp = await axios({
+            url: "https://api.openai.com/v1/chat/completions",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + process.env.REACT_APP_API_KEY,
+            },
+            data: JSON.stringify({
+              "model": "gpt-3.5-turbo",
+              "messages": convo,
+            }),
+          });
+
+          const data = resp.data.choices
+
+          setConvo([...convo, data[data.length-1].message])
+          
+          setResponse([...response, data[data.length-1].message.content]);
+     
+        } 
+        
+        catch (error) {
+          // Handle error
+          console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        if (firstRender) {
+            setFirstRender(false)
+        } else {
+            fetchData()
+        }
+    }, [convo])
+
     const fetchFilesRecursively = async (username, repository, folderPath) => {
         const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${folderPath}`;
+        let code = ''
       
         try {
-          const response = await axios.get(apiUrl);
+          const response = await axios(apiUrl);
           const data = response.data;
       
           // Loop through the items in the folder
           for (const item of data) {
-            if (item.type === 'file') {
-              const fileContentsResponse = await axios.get(item.download_url);
-              const fileContents = atob(fileContentsResponse.content);
+            if (item.type === 'file' && !item.name.endsWith('.png') && !item.name.endsWith('.ico')) {
+              const fileContentsResponse = await axios(item._links.self);
+              const fileContents = atob(fileContentsResponse.data.content);
       
-              console.log(`File: ${item.path}`);
-              console.log('Contents:', fileContents);
+              code += `File: ${item.path}\n\n`
+              code += `Contents: ${fileContents}\n\n`
+
             } else if (item.type === 'dir') {
                 await fetchFilesRecursively(username, repository, item.path);
             }
           }
+
+          setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled with the path and the code is attached below. review the code and tell me if there are any issues or changes that should be made and which file the issues are in. \n\n ${code}`}])
+    
         } catch (error) {
           console.error('Error reading folder:', error);
           throw error;
@@ -36,7 +82,7 @@ const Github = () => {
         
         const username = parts[0]
         const repo = parts[1]
-        const path = parts[parts.length-1]
+        const path = parts[parts.length-1] || '/'
         
         if (username && repo && path) {
             return {username, repo, path}
@@ -51,8 +97,9 @@ const Github = () => {
             console.log('invalid link')
             return 
         }
-        console.log(info)
-        
+        const {username, repo, path} = info
+        fetchFilesRecursively(username, repo, path)
+
       }
 
       const handleChange = (e) => {
