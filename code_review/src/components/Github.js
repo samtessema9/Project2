@@ -3,7 +3,10 @@ import { primaryContext } from '../context/primaryContext'
 import axios from 'axios';
 
 const Github = () => {
+    
     const [firstRender, setFirstRender] = useState(true)
+
+    const [request, setRequest] = useState(false)
 
     const [link, setLink] = useState('')
 
@@ -42,9 +45,10 @@ const Github = () => {
         if (firstRender) {
             setFirstRender(false)
         } else {
-            fetchData()
+
+            fetchData();
         }
-    }, [convo])
+    }, [request])
 
     const fetchFilesRecursively = async (username, repository, folderPath) => {
         const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${folderPath}`;
@@ -56,19 +60,22 @@ const Github = () => {
       
           // Loop through the items in the folder
           for (const item of data) {
-            if (item.type === 'file' && !item.name.endsWith('.png') && !item.name.endsWith('.ico')) {
+            if (item.type === 'file' && !item.name.endsWith('.png') && !item.name.endsWith('.ico') && !item.name.endsWith('.svg')) {
               const fileContentsResponse = await axios(item._links.self);
               const fileContents = atob(fileContentsResponse.data.content);
       
               code += `File: ${item.path}\n\n`
-              code += `Contents: ${fileContents}\n\n`
+              code += `Contents: \n${fileContents}\n\n`
 
             } else if (item.type === 'dir') {
                 await fetchFilesRecursively(username, repository, item.path);
             }
           }
 
+          console.log(code)
           setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled with the path and the code is attached below. review the code and tell me if there are any issues or changes that should be made and which file the issues are in. \n\n ${code}`}])
+
+          setRequest(true)
     
         } catch (error) {
           console.error('Error reading folder:', error);
