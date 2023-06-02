@@ -14,24 +14,26 @@ const Github = () => {
 
     const fetchData = async () => {
         try {
-          const resp = await axios({
-            url: "https://api.openai.com/v1/chat/completions",
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + process.env.REACT_APP_API_KEY,
-            },
-            data: JSON.stringify({
-              "model": "gpt-3.5-turbo",
-              "messages": convo,
-            }),
-          });
+        //   const resp = await axios({
+        //     url: "https://api.openai.com/v1/chat/completions",
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //       "Authorization": "Bearer " + process.env.REACT_APP_API_KEY,
+        //     },
+        //     data: JSON.stringify({
+        //       "model": "gpt-3.5-turbo",
+        //       "messages": convo,
+        //     }),
+        //   });
 
-          const data = resp.data.choices
+          console.log(convo)
 
-          setConvo([...convo, data[data.length-1].message])
+        //   const data = resp.data.choices
+
+        //   setConvo([...convo, data[data.length-1].message])
           
-          setResponse([...response, data[data.length-1].message.content]);
+        //   setResponse([...response, data[data.length-1].message.content]);
      
         } 
         
@@ -73,7 +75,8 @@ const Github = () => {
           }
 
           console.log(code)
-          setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled with the path and the code is attached below. review the code and tell me if there are any issues or changes that should be made and which file the issues are in. \n\n ${code}`}])
+
+          setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled file: *path* and content: *code*. review all of the code below and tell me if there are any issues or changes that should be made and which file the issues are in. if no changes then tell me what the code does well. \n\n ${code}`}])
 
           setRequest(true)
     
