@@ -9,6 +9,8 @@ const Filter = ({text, name}) => {
 
     const [request, setRequest] = useState(false)
 
+    const {setActiveTab} = useContext(primaryContext);
+
     const {code, convo, setConvo, response, setResponse, prompt, setPrompt} = useContext(primaryContext)
 
     const fetchData = async () => {
@@ -27,6 +29,8 @@ const Filter = ({text, name}) => {
           });
 
           const data = resp.data.choices
+
+          setActiveTab('response')
 
           setConvo([...convo, data[data.length-1].message])
           

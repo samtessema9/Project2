@@ -14,29 +14,24 @@ const Github = () => {
 
     const fetchData = async () => {
         try {
+          const resp = await axios({
+            url: "https://api.openai.com/v1/chat/completions",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + process.env.REACT_APP_API_KEY,
+            },
+            data: JSON.stringify({
+              "model": "gpt-3.5-turbo",
+              "messages": convo,
+            }),
+          });
 
-            console.log({convo})
+          const data = resp.data.choices
 
-        //   const resp = await axios({
-        //     url: "https://api.openai.com/v1/chat/completions",
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       "Authorization": "Bearer " + process.env.REACT_APP_API_KEY,
-        //     },
-        //     data: JSON.stringify({
-        //       "model": "gpt-3.5-turbo",
-        //       "messages": convo,
-        //     }),
-        //   });
-
-        //   console.log(convo)
-
-        //   const data = resp.data.choices
-
-        //   setConvo([...convo, data[data.length-1].message])
+          setConvo([...convo, data[data.length-1].message])
           
-        //   setResponse([...response, data[data.length-1].message.content]);
+          setResponse([...response, data[data.length-1].message.content]);
      
         } 
         
@@ -99,7 +94,7 @@ const Github = () => {
         } else {
             return false
         }
-    }
+      }
 
       const handleClick = async () => {
         const info = extractInfoFromUrl(link)
@@ -107,16 +102,17 @@ const Github = () => {
             console.log('invalid link')
             return 
         }
+
         const {username, repo, path} = info
         let codeArr = [];
         await fetchFilesRecursively(username, repo, path, codeArr)
 
         let strCode = codeArr.reduce((total, element) => total + element)
 
-        // setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled file: *path* and content: *code*. review all of the code below and tell me if there are any issues or changes that should be made and which file the issues are in. if no changes then tell me what the code does well. \n\n ${strCode}`}])
+        setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled file: *path* and content: *code*. review all of the code below and tell me if there are any issues or changes that should be made and which file the issues are in. if no changes then tell me what the code does well. \n\n ${strCode}`}])
 
-        console.log("setting request, code is ", strCode)
-        // setRequest(true)
+        // console.log("setting request, code is ", strCode)
+        setRequest(true)
 
       }
 
@@ -125,10 +121,14 @@ const Github = () => {
       }
 
     return ( 
-        <>
-            <input value={link} onChange={handleChange} />
+        <div id="github">
+            <input 
+              value={link} 
+              onChange={handleChange} 
+              placeholder='github-link'
+            />
             <button onClick={handleClick}>submit</button>
-        </>
+        </div>
      );
 }
  

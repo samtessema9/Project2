@@ -1,14 +1,16 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Prompt from './Prompt';
 import Response from './Response';
 import Github from './Github';
+import { primaryContext } from '../context/primaryContext';
 
 const TabsComponent = () => {
-    const [activeTab, setActiveTab] = useState('prompt');
+    const {activeTab, setActiveTab} = useContext(primaryContext);
 
     const handleTabSelect = (tab) => {
+      console.log(tab)
       setActiveTab(tab);
     };
   

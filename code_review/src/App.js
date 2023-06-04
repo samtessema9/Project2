@@ -14,7 +14,7 @@ const App = () => {
     <div className="App">
 
       <Tabs />
-      <Search />
+      
   
     </div>
   );

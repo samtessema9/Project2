@@ -3,6 +3,8 @@ import { useState, createContext } from 'react';
 export let primaryContext = createContext();
 
 const PrimaryContextProvider = (props) => {
+    const [activeTab, setActiveTab] = useState('prompt');
+
     const [prompt, setPrompt] = useState(true)
 
     const [code, setCode] = useState([]);
@@ -15,7 +17,8 @@ const PrimaryContextProvider = (props) => {
         code, setCode,
         response, setResponse, 
         convo, setConvo, 
-        prompt, setPrompt
+        prompt, setPrompt,
+        activeTab, setActiveTab
     }
 
     return ( 

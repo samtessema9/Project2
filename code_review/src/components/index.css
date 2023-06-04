@@ -3,6 +3,19 @@
   font-weight: 600;
 }
 
+body {
+  background-color: #8A7B83;
+  margin-bottom: -5px;
+}
+
+.nav {
+  height: 4vh;
+}
+
+.nav button {
+  height: auto;
+}
+
 h3 {
   font-weight: 700;
 }
@@ -33,25 +46,18 @@ button:hover {
   background-color: grey;
 }
 
-#first {
+#prompt {
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
   display: flex;
-  justify-content: space-around;
-}
-
-#second {
-  display: flex;
-  justify-content: space-around;
-}
-
-#firstPrompt {
-  width: 40%;
-  height: 60%;
-  border: 2px solid green;
+  flex-direction: column;
+  align-items: center;  
 }
 
 textarea {
   padding-top: 30px;
-  height: 600px;
+  height: 80vh;
   width: 70%;
   padding: 10px;
   border: 2px solid #ccc;
@@ -63,4 +69,13 @@ textarea {
 
 .tab-content {
   margin-top: 20px;
+}
+
+#github {
+  margin-top: 40px;
+}
+
+#github input {
+  width: 50vw;
+  margin-right: 10px;
 }
