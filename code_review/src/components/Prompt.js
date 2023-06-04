@@ -40,6 +40,7 @@ const Prompt = () => {
                     readOnly: false,
                     fontSize: 17,
                 }}
+                line={2}
             />
             <Search />
         </div>

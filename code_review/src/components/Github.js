@@ -6,49 +6,19 @@ const Github = () => {
     
     const [firstRender, setFirstRender] = useState(true)
 
-    const [request, setRequest] = useState(false)
+    const [requestFromGithub, setRequestFromGithub] = useState(false)
 
     const [link, setLink] = useState('')
 
-    const {convo, setConvo, response, setResponse} = useContext(primaryContext)
-
-    const fetchData = async () => {
-        try {
-          const resp = await axios({
-            url: "https://api.openai.com/v1/chat/completions",
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + process.env.REACT_APP_API_KEY,
-            },
-            data: JSON.stringify({
-              "model": "gpt-3.5-turbo",
-              "messages": convo,
-            }),
-          });
-
-          const data = resp.data.choices
-
-          setConvo([...convo, data[data.length-1].message])
-          
-          setResponse([...response, data[data.length-1].message.content]);
-     
-        } 
-        
-        catch (error) {
-          // Handle error
-          console.error(error);
-        }
-    };
+    const {convo, setConvo, fetchData} = useContext(primaryContext)
 
     useEffect(() => {
         if (firstRender) {
             setFirstRender(false)
         } else {
-           
-            fetchData();
+           fetchData();
         }
-    }, [request])
+    }, [requestFromGithub])
 
     const fetchFilesRecursively = async (username, repository, folderPath, store) => {
         const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${folderPath}`;
@@ -72,12 +42,9 @@ const Github = () => {
              
             }
           }
-
-          
-    
-        } catch (error) {
-          console.error('Error reading folder:', error);
-          throw error;
+        } 
+        catch (error) {
+          throw new Error(error.message);
         }
       };
 
@@ -111,8 +78,7 @@ const Github = () => {
 
         setConvo([...convo , {"role": "user", "content": `This is code from a github repo. each files is labeled file: *path* and content: *code*. review all of the code below and tell me if there are any issues or changes that should be made and which file the issues are in. if no changes then tell me what the code does well. \n\n ${strCode}`}])
 
-        // console.log("setting request, code is ", strCode)
-        setRequest(true)
+        setRequestFromGithub(true)
 
       }
 

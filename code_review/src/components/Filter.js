@@ -7,43 +7,9 @@ const Filter = ({text, name}) => {
    
     const [firstRender, setFirstRender] = useState(true)
 
-    const [request, setRequest] = useState(false)
+    const [requestFromFilter, setRequestFromFilter] = useState(false)
 
-    const {setActiveTab} = useContext(primaryContext);
-
-    const {code, convo, setConvo, response, setResponse} = useContext(primaryContext)
-
-    const fetchData = async () => {
-        try {
-          setActiveTab('response')
-
-          const resp = await axios({
-            url: "https://api.openai.com/v1/chat/completions",
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + process.env.REACT_APP_API_KEY,
-            },
-            data: JSON.stringify({
-              "model": "gpt-3.5-turbo",
-              "messages": convo,
-            }),
-          });
-
-          const data = resp.data.choices
-
-          setConvo([...convo, data[data.length-1].message])
-          
-          setResponse([...response, data[data.length-1].message.content]);
-
-        } 
-        
-        catch (error) {
-          // Handle error
-          throw new Error(error)
-        }
-    };
-
+    const {code, convo, setConvo, response, setResponse, setActiveTab, fetchData} = useContext(primaryContext)
 
     useEffect(() => {
         if (firstRender) {
@@ -52,7 +18,7 @@ const Filter = ({text, name}) => {
             fetchData();
             console.log({convo})
         }
-    }, [request])
+    }, [requestFromFilter])
 
     const handleClick = (e) => {
         const queries = {
@@ -64,7 +30,7 @@ const Filter = ({text, name}) => {
 
         setConvo([...convo , {"role": "user", "content": `can you please review this code snippet?\n\ncode snippet: \n${code}\n\nCan you tell me if there are any ${queries[e.target.name]} with the code?\n`}])
         
-        setRequest(true)
+        setRequestFromFilter(true)
     }
 
     return ( 

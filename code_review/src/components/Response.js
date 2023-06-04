@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
 import { primaryContext } from "../context/primaryContext";
+import Questions from "./Questions";
 import "./index.css"
 
 const Response = () => {
@@ -8,8 +9,10 @@ const Response = () => {
     return ( 
         <div id="response">
             <h3>Response</h3>
-            <textarea value={response[response.length - 1]}></textarea>
-            
+            <div>
+                <textarea value={response[response.length - 1]}></textarea>
+                <Questions />
+            </div>
         </div>
      );
 }
