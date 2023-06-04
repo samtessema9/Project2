@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import './index.css'
 import { primaryContext } from "../context/primaryContext";
 import Search from "./Search";
@@ -6,21 +6,35 @@ import Editor from '@monaco-editor/react'
 
 const Prompt = () => {
 
-    const { setCode } = useContext(primaryContext)
+    const { code, setCode } = useContext(primaryContext)
 
-    const handleChange = (value) => {
+    const [language, setLanguage] = useState('javascript');
+
+    let languages = ['C', 'CSS', 'C++', 'Go', 'HTML', 'Java', 'Javascript', 'Kotlin', 'Python', 'PHP', 'Ruby', 'Rust','Swift']
+
+    const handleLanguageChange = (e) => {
+        setLanguage(e.target.value);
+    };
+
+    const handleCodeChange = (value) => {
         setCode(value)
     }
 
     return ( 
         <div id="prompt">
             <h3>enter / edit Code</h3>
+            <select value={language} onChange={handleLanguageChange}>
+                {languages.map(language => {
+                    return <option value={language.toLowerCase()} key={language}>{language}</option>
+                })}
+            </select>
             <Editor 
+                value={code}
+                language={language}
                 height="80vh"
                 width="70%"
-                defaultLanguage="javascript"
                 theme="vs-dark"
-                onChange={handleChange}
+                onChange={handleCodeChange}
                 options={{
                     wordWrap: 'on',
                     readOnly: false,

@@ -11,10 +11,12 @@ const Filter = ({text, name}) => {
 
     const {setActiveTab} = useContext(primaryContext);
 
-    const {code, convo, setConvo, response, setResponse, prompt, setPrompt} = useContext(primaryContext)
+    const {code, convo, setConvo, response, setResponse} = useContext(primaryContext)
 
     const fetchData = async () => {
         try {
+          setActiveTab('response')
+
           const resp = await axios({
             url: "https://api.openai.com/v1/chat/completions",
             method: "POST",
@@ -30,8 +32,6 @@ const Filter = ({text, name}) => {
 
           const data = resp.data.choices
 
-          setActiveTab('response')
-
           setConvo([...convo, data[data.length-1].message])
           
           setResponse([...response, data[data.length-1].message.content]);
@@ -40,7 +40,7 @@ const Filter = ({text, name}) => {
         
         catch (error) {
           // Handle error
-          console.error(error);
+          throw new Error(error)
         }
     };
 
@@ -51,13 +51,18 @@ const Filter = ({text, name}) => {
         } else {
             fetchData();
             console.log({convo})
-            console.log({response})
         }
     }, [request])
 
     const handleClick = (e) => {
+        const queries = {
+          syntax: "syntax errors or improvents that should be made",
+          errors: "logical errors or error handling issues",
+          structure: "structural issues",
+          general: "general improvements that could be made"
+        }
 
-        setConvo([...convo , {"role": "user", "content": `can you please review this code snippet?\n\ncode snippet: \n${code}\n\nCan you tell me if there are any ${e.target.name} issues with the code?\n`}])
+        setConvo([...convo , {"role": "user", "content": `can you please review this code snippet?\n\ncode snippet: \n${code}\n\nCan you tell me if there are any ${queries[e.target.name]} with the code?\n`}])
         
         setRequest(true)
     }

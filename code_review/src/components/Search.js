@@ -3,7 +3,7 @@ import Filter from './Filter';
 import './index.css'
 
 const Search = () => {
-    let filters = ['Syntax', 'Errors', 'Formatting', 'Efficency']
+    let filters = ['syntax', 'errors', 'structure', 'general']
 
     let filtersJsx = filters.map(filter => {
         return <Filter key={filter} text={filter} name={filter}/>

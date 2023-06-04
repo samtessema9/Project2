@@ -10,7 +10,6 @@ const TabsComponent = () => {
     const {activeTab, setActiveTab} = useContext(primaryContext);
 
     const handleTabSelect = (tab) => {
-      console.log(tab)
       setActiveTab(tab);
     };
   
