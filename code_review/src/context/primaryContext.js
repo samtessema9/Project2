@@ -16,6 +16,8 @@ const PrimaryContextProvider = (props) => {
         try {
           setActiveTab('response')
 
+          console.log(convo)
+
           const resp = await axios({
             url: "https://api.openai.com/v1/chat/completions",
             method: "POST",
@@ -39,7 +41,7 @@ const PrimaryContextProvider = (props) => {
         
         catch (error) {
           // Handle error
-          throw new Error(error);
+          throw new Error('something went wrong with the request: ' + error);
         }
     };
 

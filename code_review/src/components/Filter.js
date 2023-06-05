@@ -30,7 +30,7 @@ const Filter = ({text, name}) => {
 
         setConvo([...convo , {"role": "user", "content": `can you please review this code snippet?\n\ncode snippet: \n${code}\n\nCan you tell me if there are any ${queries[e.target.name]} with the code?\n`}])
         
-        setRequestFromFilter(true)
+        setRequestFromFilter(!requestFromFilter)
     }
 
     return ( 

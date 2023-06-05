@@ -23,8 +23,8 @@ const Questions = () => {
     const handleClick = (e) => {
 
         setConvo([...convo , {"role": "user", "content": question}])
-        
-        setRequestFromQuestion(true)
+        setRequestFromQuestion(!requestFromQuestion)
+        setQuestion('')
     }
 
     return ( 
