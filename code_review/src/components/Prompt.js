@@ -1,4 +1,5 @@
 import React, {useContext, useState} from "react";
+import Github from "./Github";
 import './index.css'
 import { primaryContext } from "../context/primaryContext";
 import Search from "./Search";

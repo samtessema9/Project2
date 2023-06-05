@@ -20,7 +20,7 @@ body {
 
 h3 {
   font-weight: 700;
-  color: white;
+  color: goldenrod;
 }
 
 div {
@@ -38,7 +38,7 @@ div {
 button {
   height: 30px;
   color: black;
-  background-color: lightblue;
+  background-color: rgb(7, 149, 40);
   border: 2px solid black;
   border-radius: 4px;
 

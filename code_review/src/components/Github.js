@@ -22,7 +22,6 @@ const Github = () => {
 
     const fetchFilesRecursively = async (username, repository, folderPath, store) => {
         const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${folderPath}`;
-        let code = ''
       
         try {
           const response = await axios(apiUrl);
