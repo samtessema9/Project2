@@ -41,7 +41,7 @@ const PrimaryContextProvider = (props) => {
         
         catch (error) {
           // Handle error
-          throw new Error('something went wrong with the request: ' + error);
+          alert('Api is not able to handle your request.')
         }
     };
 
