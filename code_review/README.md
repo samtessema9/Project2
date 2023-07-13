@@ -4,9 +4,9 @@ Welcome to Code Review! This application provides a convenient platform for revi
 1.  Open the Code Review App in your web browser. https://code-reviewer.onrender.com/
 2. Choose one of the following options:
     -   **Paste or Write Code**: If you want to review a specific piece of code, simply paste or write it in the provided code editor on the app's homepage. Then click one of the buttons to initiate the review.
-    -   **Provide GitHub Link**: If your code is hosted on GitHub, enter the repository URL or file URL in the input field in the github tab and click submit to initiate the review.
+    -   **Provide GitHub Link**: If your code is hosted on GitHub, enter the repository URL or file URL in the input field in the GitHub tab and click submit to initiate the review.
 3. The app will provide feedback and suggestions based on the code review performed by the OpenAI API.
-4. You can then ask fololw up questions in the input field next to the response and click the "Ask" button to ask further questions about your code.
+4. You can then ask follow-up questions in the input field next to the response and click the "Ask" button to ask further questions about your code.
 5. You can continue to review and ask questions about the code as needed.
 
 ## Technologies used
